@@ -19,6 +19,12 @@ public:
 private:
     Ui::MainWindow *ui;
     QList<TabPage *> Tabs;
+    QList<bool> isUntitled;
+
+protected:
+    int newTab(QString str);
+private slots:
+    void on_actionNew_triggered();
 };
 
 #endif // MAINWINDOW_H
