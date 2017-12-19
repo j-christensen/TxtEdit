@@ -8,9 +8,10 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     setAcceptDrops(true);
-    TabPage *myNewTab = new TabPage;
+    TabPage *pTab = new TabPage;
+    Tabs.push_back(pTab);
     ui->tabWidget->removeTab(0);
-    ui->tabWidget->addTab(myNewTab, tr("File 1"));
+    ui->tabWidget->addTab(pTab, tr("Untitled"));
 }
 
 MainWindow::~MainWindow()

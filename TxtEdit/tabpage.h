@@ -14,9 +14,12 @@ class TabPage : public QWidget
 public:
     explicit TabPage(QWidget *parent = 0);
     ~TabPage();
+    void setFileName(QString name);
+    QString getFileName();
 
 private:
     Ui::TabPage *ui;
+    QString FileName;
 };
 
 #endif // TABPAGE_H
