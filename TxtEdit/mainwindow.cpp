@@ -23,30 +23,33 @@ MainWindow::~MainWindow()
 int MainWindow::newTab(QString str){
     TabPage *pTab = new TabPage;
     Tabs.push_back(pTab);
-    if (str.isEmpty()){
-        isUntitled.push_back(true);
-        int numUntitled=0;
-        for(int i=0;i<isUntitled.length();i++){
+
+    return ui->tabWidget->addTab(pTab, str);
+}
+
+void MainWindow::on_actionNew_triggered()
+{
+    int i;
+    bool isitaken=true;
+    QString str;
+    for(i=1;isitaken;i++){//i is the number to be added on the end of tab name
+        isitaken=false;
+        for (int j=0;j<=isUntitled.length();j++){
+            if(isUntitled[j]==i){
+                isitaken=true;
+                break;
+            }
+        }
+    }
+
+    isUntitled.push_back(true);
+    int numUntitled=0;
+    for(int i=0;i<isUntitled.length();i++){
             if (isUntitled[i]){
                 numUntitled+=1;
             }
         }
         str.setNum(numUntitled);
         str="Untitled "+str;
-    }else{
-        isUntitled.push_back(false);
-    }
-    return ui->tabWidget->addTab(pTab, str);
-    //return pTab;
-}
-
-void MainWindow::on_actionNew_triggered()
-{
     int tab = newTab("");
-    QMessageBox msgBox;
-    QString str;
-    str.setNum(tab);
-    str="The created tab has index "+str+".";
-    msgBox.setText(str);
-    msgBox.exec();
 }

@@ -19,7 +19,7 @@ public:
 private:
     Ui::MainWindow *ui;
     QList<TabPage *> Tabs;
-    QList<bool> isUntitled;
+    QList<int> isUntitled;
 
 protected:
     int newTab(QString str);
