@@ -12,7 +12,9 @@ MainWindow::MainWindow(QWidget *parent) :
     TabPage *pTab = new TabPage;
     Tabs.push_back(pTab);
     ui->tabWidget->removeTab(0);
-    newTab("");
+    isUntitled.push_back(1);
+    TabNames.push_back("Untitled 1");
+    newTab("Untitled 1");
 }
 
 MainWindow::~MainWindow()
@@ -29,27 +31,25 @@ int MainWindow::newTab(QString str){
 
 void MainWindow::on_actionNew_triggered()
 {
-    int i;
+    int iToUse;
     bool isitaken=true;
     QString str;
-    for(i=1;isitaken;i++){//i is the number to be added on the end of tab name
+    for(int i=1;isitaken;i++){//i is the number to be added on the end of tab name
         isitaken=false;
-        for (int j=0;j<=isUntitled.length();j++){
+        for (int j=0;j<isUntitled.length();j++){
             if(isUntitled[j]==i){
                 isitaken=true;
                 break;
             }
         }
+        if (!isitaken){
+            iToUse=i;
+        }
     }
 
-    isUntitled.push_back(true);
-    int numUntitled=0;
-    for(int i=0;i<isUntitled.length();i++){
-            if (isUntitled[i]){
-                numUntitled+=1;
-            }
-        }
-        str.setNum(numUntitled);
-        str="Untitled "+str;
-    int tab = newTab("");
+    str.setNum(iToUse);
+    str="Untitled "+str;
+    isUntitled.push_back(iToUse);
+    TabNames.push_back(str);
+    newTab(str);
 }

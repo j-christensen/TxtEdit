@@ -20,6 +20,7 @@ private:
     Ui::MainWindow *ui;
     QList<TabPage *> Tabs;
     QList<int> isUntitled;
+    QList<QString> TabNames;
 
 protected:
     int newTab(QString str);
