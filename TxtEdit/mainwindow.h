@@ -25,6 +25,7 @@ protected:
 private slots:
     void on_actionNew_triggered();
     void on_tabWidget_tabCloseRequested(int index);
+    void on_actionOpen_triggered();
 };
 
 #endif // MAINWINDOW_H

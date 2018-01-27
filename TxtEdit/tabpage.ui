@@ -27,7 +27,7 @@
     <number>2</number>
    </property>
    <item>
-    <widget class="QTextEdit" name="textEdit"/>
+    <widget class="QTextEdit" name="Editor"/>
    </item>
   </layout>
  </widget>

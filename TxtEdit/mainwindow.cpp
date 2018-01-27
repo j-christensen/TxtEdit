@@ -2,6 +2,10 @@
 #include "ui_mainwindow.h"
 #include "tabpage.h"
 #include "QMessageBox"
+#include "QFileDialog"
+#include "QTextStream"
+#include "QTabWidget"
+#include "QTextEdit"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -22,7 +26,9 @@ int MainWindow::newTab(QString str){
     TabPage *pTab = new TabPage;
     Tabs.push_back(pTab);
     pTab->setTitle(str);
-    return ui->tabWidget->addTab(pTab, str);
+    int tabindex = ui->tabWidget->addTab(pTab, str);
+    ui->tabWidget->setCurrentIndex(tabindex);
+    return tabindex;
 }
 
 void MainWindow::on_actionNew_triggered()
@@ -55,4 +61,20 @@ void MainWindow::on_tabWidget_tabCloseRequested(int index)
     ui->tabWidget->removeTab(index);
     Tabs.removeAt(index);
     delete closingTab;
+}
+
+void MainWindow::on_actionOpen_triggered()
+{
+    QString fileName = QFileDialog::getOpenFileName(this, "Open the file");
+    QFile file(fileName);
+    if (!file.open(QIODevice::ReadOnly | QFile::Text)){
+        QMessageBox::warning(this,"..","File not opened.");
+        return;
+    }
+    QTextStream in(&file);
+    QString text = in.readAll();
+
+    newTab(fileName);
+    Tabs[Tabs.length()-1]->setEditor(text);
+    file.close();
 }

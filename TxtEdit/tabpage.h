@@ -20,6 +20,7 @@ public:
     void saveFile();
     QString getTitle();
     void setTitle(QString title);
+    void setEditor(QString text);
 private:
     Ui::TabPage *ui;
     QString FileDir;
