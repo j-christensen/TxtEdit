@@ -26,7 +26,9 @@ int MainWindow::newTab(QString str){
     TabPage *pTab = new TabPage;
     Tabs.push_back(pTab);
     pTab->setTitle(str);
-    return ui->tabWidget->addTab(pTab, str);
+    int tabindex = ui->tabWidget->addTab(pTab, str);
+    ui->tabWidget->setCurrentIndex(tabindex);
+    return tabindex;
 }
 
 void MainWindow::on_actionNew_triggered()
@@ -72,12 +74,7 @@ void MainWindow::on_actionOpen_triggered()
     QTextStream in(&file);
     QString text = in.readAll();
 
-    int tabindex = newTab(fileName);
-    ui->tabWidget->setCurrentIndex(tabindex);
-    TabPage *pTabPage=Tabs[tabindex];
-    QList<QTextEdit *> allTextEdits = pTabPage->findChildren<QTextEdit *>();
-    QTextEdit *pTextEdit=allTextEdits[0];
-    pTextEdit->setText(text);
+    newTab(fileName);
+    Tabs[Tabs.length()-1]->setEditor(text);
     file.close();
-
 }

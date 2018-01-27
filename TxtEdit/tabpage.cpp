@@ -29,6 +29,9 @@ void TabPage::setTitle(QString title){
 QString TabPage::getTitle(){
     return Title;
 }
+void TabPage::setEditor(QString text){
+    ui->Editor->setText(text);
+}
 void TabPage::saveFile(){
 
 }
