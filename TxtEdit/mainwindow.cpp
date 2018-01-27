@@ -9,11 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     setAcceptDrops(true);
-    TabPage *pTab = new TabPage;
-    Tabs.push_back(pTab);
     ui->tabWidget->removeTab(0);
-    isUntitled.push_back(1);
-    TabNames.push_back("Untitled 1");
     newTab("Untitled 1");
 }
 
@@ -25,31 +21,38 @@ MainWindow::~MainWindow()
 int MainWindow::newTab(QString str){
     TabPage *pTab = new TabPage;
     Tabs.push_back(pTab);
-
+    pTab->setTitle(str);
     return ui->tabWidget->addTab(pTab, str);
 }
 
 void MainWindow::on_actionNew_triggered()
 {
-    int iToUse;
-    bool isitaken=true;
     QString str;
-    for(int i=1;isitaken;i++){//i is the number to be added on the end of tab name
-        isitaken=false;
-        for (int j=0;j<isUntitled.length();j++){
-            if(isUntitled[j]==i){
-                isitaken=true;
+    bool isigood=false;
+    //code to get tab number for Untitled tabs.
+    for(int i=1 ; !isigood ; i++){
+        str.setNum(i);
+        str="Untitled "+str;
+        isigood=true;
+        for(int j=0; j<Tabs.length();j++){
+            if(str==Tabs[j]->getTitle()){
+                isigood=false;
                 break;
             }
         }
-        if (!isitaken){
-            iToUse=i;
-        }
     }
-
-    str.setNum(iToUse);
-    str="Untitled "+str;
-    isUntitled.push_back(iToUse);
-    TabNames.push_back(str);
     newTab(str);
+}
+
+void MainWindow::on_tabWidget_tabCloseRequested(int index)
+{
+    TabPage *closingTab=Tabs[index];
+    //check to see if file needs to be saved.
+    if(closingTab->isChanged()){//save contents
+        closingTab->saveFile();
+    }
+    //remove tab
+    ui->tabWidget->removeTab(index);
+    Tabs.removeAt(index);
+    delete closingTab;
 }

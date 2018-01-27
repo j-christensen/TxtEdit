@@ -19,13 +19,12 @@ public:
 private:
     Ui::MainWindow *ui;
     QList<TabPage *> Tabs;
-    QList<int> isUntitled;
-    QList<QString> TabNames;
 
 protected:
     int newTab(QString str);
 private slots:
     void on_actionNew_triggered();
+    void on_tabWidget_tabCloseRequested(int index);
 };
 
 #endif // MAINWINDOW_H

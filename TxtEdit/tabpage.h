@@ -14,12 +14,17 @@ class TabPage : public QWidget
 public:
     explicit TabPage(QWidget *parent = 0);
     ~TabPage();
-    void setFileName(QString name);
-    QString getFileName();
-
+    void setFileDir(QString name);
+    QString getFileDir();
+    bool isChanged();
+    void saveFile();
+    QString getTitle();
+    void setTitle(QString title);
 private:
     Ui::TabPage *ui;
-    QString FileName;
+    QString FileDir;
+    bool Changed;
+    QString Title;
 };
 
 #endif // TABPAGE_H

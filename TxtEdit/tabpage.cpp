@@ -13,10 +13,22 @@ TabPage::~TabPage()
     delete ui;
 }
 
-void TabPage::setFileName(QString name){
-    FileName=name;
+void TabPage::setFileDir(QString name){
+    FileDir=name;
 }
 
-QString TabPage::getFileName(){
-    return FileName;
+QString TabPage::getFileDir(){
+    return FileDir;
+}
+bool TabPage::isChanged(){
+    return Changed;
+}
+void TabPage::setTitle(QString title){
+    Title=title;
+}
+QString TabPage::getTitle(){
+    return Title;
+}
+void TabPage::saveFile(){
+
 }
