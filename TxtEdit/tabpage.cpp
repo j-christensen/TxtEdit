@@ -1,5 +1,6 @@
 #include "tabpage.h"
 #include "ui_tabpage.h"
+#include "QFileInfo"
 
 TabPage::TabPage(QWidget *parent) :
     QWidget(parent),
@@ -19,6 +20,10 @@ void TabPage::setFileDir(QString name){
 
 QString TabPage::getFileDir(){
     return FileDir;
+}
+QString TabPage::getFileName(){
+    QFileInfo fileInfo(getFileDir());
+    return fileInfo.fileName();
 }
 bool TabPage::isChanged(){
     return Changed;

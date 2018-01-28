@@ -21,6 +21,7 @@ public:
     QString getTitle();
     void setTitle(QString title);
     void setEditor(QString text);
+    QString getFileName();
 private:
     Ui::TabPage *ui;
     QString FileDir;

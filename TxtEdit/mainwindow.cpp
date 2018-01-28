@@ -6,6 +6,7 @@
 #include "QTextStream"
 #include "QTabWidget"
 #include "QTextEdit"
+#include "QFileInfo"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -25,8 +26,14 @@ MainWindow::~MainWindow()
 int MainWindow::newTab(QString str){
     TabPage *pTab = new TabPage;
     Tabs.push_back(pTab);
-    pTab->setTitle(str);
-    int tabindex = ui->tabWidget->addTab(pTab, str);
+    if (QFileInfo::exists(str)){
+        pTab->setFileDir(str);
+        pTab->setTitle(pTab->getFileName());
+    }else{
+        pTab->setTitle(str);
+    }
+
+    int tabindex = ui->tabWidget->addTab(pTab, pTab->getTitle());
     ui->tabWidget->setCurrentIndex(tabindex);
     return tabindex;
 }
