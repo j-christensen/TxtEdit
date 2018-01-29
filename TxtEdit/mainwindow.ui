@@ -69,6 +69,8 @@
     <addaction name="actionSave_As"/>
     <addaction name="actionRevert"/>
     <addaction name="separator"/>
+    <addaction name="actionPrint"/>
+    <addaction name="separator"/>
     <addaction name="actionClose"/>
     <addaction name="actionClose_All"/>
     <addaction name="separator"/>
@@ -160,6 +162,11 @@
   <action name="actionExit">
    <property name="text">
     <string>Exit</string>
+   </property>
+  </action>
+  <action name="actionPrint">
+   <property name="text">
+    <string>Print</string>
    </property>
   </action>
  </widget>

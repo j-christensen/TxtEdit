@@ -4,6 +4,8 @@
 #include "QMessageBox"
 #include "QTextStream"
 #include "QFileDialog"
+#include "QPrinter"
+#include "QPrintDialog"
 
 TabPage::TabPage(QWidget *parent) :
     QWidget(parent),
@@ -70,7 +72,13 @@ bool TabPage::openFile(){
     file.close();
     return true;
 }
-
+void TabPage::print(){
+    QPrinter *printer=new QPrinter;
+    QPrintDialog printDialog(printer, this);
+    if (printDialog.exec() == QDialog::Accepted){
+        ui->Editor->print(printer);
+    }
+}
 void TabPage::setFileDir(QString name){
     FileDir=name;
 }

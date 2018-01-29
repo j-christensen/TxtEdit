@@ -113,3 +113,9 @@ void MainWindow::on_actionSave_As_triggered()
     Tabs[tabindex]->saveFileAs();
     ui->tabWidget->setTabText(tabindex,Tabs[tabindex]->getTitle());
 }
+
+void MainWindow::on_actionPrint_triggered()
+{
+    int tabindex=ui->tabWidget->currentIndex();
+    Tabs[tabindex]->print();
+}

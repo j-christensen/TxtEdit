@@ -17,6 +17,7 @@ public:
     bool openFile();
     void saveFile();
     void saveFileAs();
+    void print();
     void setFileDir(QString name);
     QString getFileDir();
     void setTitle(QString title);
