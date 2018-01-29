@@ -1,12 +1,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "tabpage.h"
-#include "QMessageBox"
-#include "QFileDialog"
-#include "QTextStream"
 #include "QTabWidget"
-#include "QTextEdit"
 #include "QFileInfo"
+#include "QMessageBox"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -62,7 +59,29 @@ void MainWindow::on_tabWidget_tabCloseRequested(int index)
     TabPage *closingTab=Tabs[index];
     //check to see if file needs to be saved.
     if(closingTab->isChanged()){//save contents
-        closingTab->saveFile();
+        //prompt the user if they want to save changes.
+        QMessageBox msgBox;
+        msgBox.setText("The document has been modified.");
+        msgBox.setInformativeText("Do you want to save your changes?");
+        msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+        msgBox.setDefaultButton(QMessageBox::Save);
+        int ret = msgBox.exec();
+        switch (ret){
+        case QMessageBox::Save:
+            //Save was clicked
+            closingTab->saveFile();
+            break;
+        case QMessageBox::Discard:
+            //Don't Save was clicked
+            break;
+        case QMessageBox::Cancel:
+            //Cancel was clicked
+            return;
+        default:
+            //should never be reached
+            break;
+        }
+
     }
     //remove tab
     ui->tabWidget->removeTab(index);
@@ -72,16 +91,25 @@ void MainWindow::on_tabWidget_tabCloseRequested(int index)
 
 void MainWindow::on_actionOpen_triggered()
 {
-    QString fileName = QFileDialog::getOpenFileName(this, "Open the file");
-    QFile file(fileName);
-    if (!file.open(QIODevice::ReadOnly | QFile::Text)){
-        QMessageBox::warning(this,"..","File not opened.");
-        return;
+    int tabindex=newTab("");
+    if(Tabs[tabindex]->openFile()){
+        TabPage *newTab=Tabs[tabindex];
+        ui->tabWidget->setTabText(tabindex,newTab->getTitle());
+    }else{
+        this->on_tabWidget_tabCloseRequested(tabindex);
     }
-    QTextStream in(&file);
-    QString text = in.readAll();
+}
 
-    newTab(fileName);
-    Tabs[Tabs.length()-1]->setEditor(text);
-    file.close();
+void MainWindow::on_actionSave_triggered()
+{
+    int tabindex=ui->tabWidget->currentIndex();
+    Tabs[tabindex]->saveFile();
+    ui->tabWidget->setTabText(tabindex,Tabs[tabindex]->getTitle());
+}
+
+void MainWindow::on_actionSave_As_triggered()
+{
+    int tabindex=ui->tabWidget->currentIndex();
+    Tabs[tabindex]->saveFileAs();
+    ui->tabWidget->setTabText(tabindex,Tabs[tabindex]->getTitle());
 }
