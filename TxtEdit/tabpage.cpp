@@ -108,3 +108,19 @@ void TabPage::on_Editor_textChanged()
 {
     Changed=true;
 }
+
+void TabPage::undo(){
+    ui->Editor->copy();
+}
+void TabPage::redo(){
+    ui->Editor->redo();
+}
+void TabPage::copy(){
+    ui->Editor->copy();
+}
+void TabPage::cut(){
+    ui->Editor->cut();
+}
+void TabPage::paste(){
+    ui->Editor->paste();
+}

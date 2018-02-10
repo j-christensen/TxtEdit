@@ -24,6 +24,11 @@ public:
     QString getTitle();
     QString getFileName();
     bool isChanged();
+    void undo();
+    void redo();
+    void copy();
+    void cut();
+    void paste();
 private slots:
     void on_Editor_textChanged();
 

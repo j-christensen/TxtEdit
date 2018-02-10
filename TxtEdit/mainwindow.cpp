@@ -89,6 +89,11 @@ void MainWindow::on_tabWidget_tabCloseRequested(int index)
     delete closingTab;
 }
 
+int MainWindow::currentTab(){
+    int tabindex=ui->tabWidget->currentIndex();
+    return tabindex;
+}
+
 void MainWindow::on_actionOpen_triggered()
 {
     int tabindex=newTab("");
@@ -102,20 +107,49 @@ void MainWindow::on_actionOpen_triggered()
 
 void MainWindow::on_actionSave_triggered()
 {
-    int tabindex=ui->tabWidget->currentIndex();
+    int tabindex=currentTab();
     Tabs[tabindex]->saveFile();
     ui->tabWidget->setTabText(tabindex,Tabs[tabindex]->getTitle());
 }
 
 void MainWindow::on_actionSave_As_triggered()
 {
-    int tabindex=ui->tabWidget->currentIndex();
+    int tabindex=currentTab();
     Tabs[tabindex]->saveFileAs();
     ui->tabWidget->setTabText(tabindex,Tabs[tabindex]->getTitle());
 }
 
 void MainWindow::on_actionPrint_triggered()
 {
-    int tabindex=ui->tabWidget->currentIndex();
-    Tabs[tabindex]->print();
+    Tabs[currentTab()]->print();
+}
+
+void MainWindow::on_actionClose_triggered()
+{
+    on_tabWidget_tabCloseRequested(currentTab());
+}
+
+void MainWindow::on_actionUndo_triggered()
+{
+    Tabs[currentTab()]->undo();
+}
+
+void MainWindow::on_actionRedo_triggered()
+{
+    Tabs[currentTab()]->redo();
+}
+
+void MainWindow::on_actionCopy_triggered()
+{
+    Tabs[currentTab()]->copy();
+}
+
+void MainWindow::on_actionCut_triggered()
+{
+    Tabs[currentTab()]->cut();
+}
+
+void MainWindow::on_actionPaste_triggered()
+{
+    Tabs[currentTab()]->paste();
 }
